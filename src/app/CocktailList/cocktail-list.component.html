@@ -1,0 +1,33 @@
+
+<div class="container justify-content-center flex-wrap">
+<div class="bold-text">Filters</div>
+<label>Cocktail Name: <input type="text" [(ngModel)]="searchList" (input)="filterCocktails()">
+</label>
+  <div class="card"  *ngFor="let cocktail of cocktails">
+    <div class="row">
+      <div class="col-lg-4">
+        <img src="{{ cocktail.imageUrl }}" alt="{{ cocktail.name }}"/>
+      </div>
+      <div class="col-lg-8">
+        <div class="card-body">
+          <a class="bold-text" [routerLink] = "['/cocktailDetail', cocktail.id]">
+          	{{ cocktail.name }}
+          </a>
+          <span class="icon-star" [ngClass]="{'active':isFavourite(cocktail.id)}"
+			(click)="toggleFavourite(cocktail.id)"></span>
+          <div class="alcoholic-color" *ngIf="cocktail.isAlcoholic; else elseBlock">
+            Alcoholic
+          </div>
+          <ng-template #elseBlock
+            ><div class="non-alcoholic-color">Non-alcoholic</div>
+            </ng-template>
+          <div class="flex-wrap">
+            <div *ngFor="let ingredient of cocktail.ingredients">
+              <div>{{ ingredient }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

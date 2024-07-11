@@ -1,0 +1,15 @@
+.alcoholic-color {
+  background-color: blue;
+  color: lightblue;
+  border-radius: 25px;
+}
+.non-alcoholic-color {
+  background-color: green;
+  color: lightgreen;
+  border-radius: 25px;
+}
+.bold-text {
+  font-weight: 500;
+  color: black;
+}
+

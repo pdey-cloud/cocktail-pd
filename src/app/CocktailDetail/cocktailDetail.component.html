@@ -1,0 +1,34 @@
+<button (click)="goBack()">Back</button>
+<div class="container justify-content-center flex-wrap">
+	  <div class="row">
+	    <div class="col-lg-3">
+	      <img class="img-class" src="{{ cocktails.imageUrl }}" alt="{{ cocktails.name }}"/>
+	    </div>
+	    <div class="col-lg-8">
+	      <h3>{{ cocktails.name }}
+			<span class="icon-star" [ngClass]="{'active':isFavourite(cocktails.id)}"
+			(click)="toggleFavourite(cocktails  .id)"></span>
+	      </h3>
+	      <div class="display-block"> <b>Type:</b> &nbsp;
+					<span class="alcoholic-color" *ngIf="cocktails.isAlcoholic; else elseBlock">
+				        Alcoholic
+	      </span>
+	      	<ng-template #elseBlock>
+	      		<div class="non-alcoholic-color">Non-alcoholic</div>
+	        </ng-template>
+	    	</div>
+	       <div class="display-block"> <b>Ingredients:</b> &nbsp;
+	           <div class="flex-wrap">
+	          <div *ngFor="let ingredient of cocktails.ingredients">
+	            <div>{{ ingredient }}</div>
+	          </div>
+	        </div>
+	    		</div>
+	     	<div class="display-block"> <b>Instructions:</b>
+	        <div>{{cocktails.instructions}}</div>
+	     	</div>
+	  </div>
+	</div>
+</div>
+
+
