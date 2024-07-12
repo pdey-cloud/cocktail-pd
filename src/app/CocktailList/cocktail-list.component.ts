@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -17,23 +17,27 @@ export class CocktailListComponent implements OnInit{
   cocktails: Cocktail[];
   searchList: string = '';
   cocktailList:Cocktail[];
+  @Input() cocktail!: Cocktail;
   constructor(private http: HttpClient, private router: Router, private favouriteService: FavouriteService){}
 
   ngOnInit() {
-    this.cocktails = this.favouriteService.getFavouriteCocktail();
     this.getCocktailsList();
   }
   getCocktailsList() {
      this.http.get<Cocktail[]>('/cockails').subscribe(response => {
       this.cocktails = response;
       this.cocktailList = this.cocktails;
+      this.cocktailList.map((item: any) =>{
+      this.cocktail.isFavourite = this.favouriteService.isFavourite(item.id);
+      });
     });
    }
    isFavourite(cocktailID: string) : boolean {
     return this.favouriteService.isFavourite(cocktailID)
    }
    toggleFavourite(cocktailID:string){
-      this.favouriteService.toggleFavourite(cocktailID);
+    this.favouriteService.toggleFavourite(cocktailID);
+    this.cocktail.isFavourite = !this.cocktail.isFavourite;
    }
 
    filterCocktails(): void{
