@@ -27,7 +27,7 @@ export class CocktailListComponent implements OnInit{
      this.http.get<Cocktail[]>('/cockails').subscribe(response => {
       this.cocktails = response;
       this.cocktailList = this.cocktails;
-      this.cocktailList.map((item: any) =>{
+      this.cocktailList.map((item: Cocktail) =>{
       this.cocktail.isFavourite = this.favouriteService.isFavourite(item.id);
       });
     });
