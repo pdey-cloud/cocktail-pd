@@ -6,20 +6,35 @@ import { Cocktail } from './cocktail.interface';
 })
 
 export class FavouriteService {
-  private favouriteCocktail: Cocktail[];
-  private cocktailFav: Set<string> = new Set();
+  private favouriteCocktailKey = 'favouriteCocktails';
+  private cocktailFav: Set<string>;
 
-    getFavouriteCocktail(): Cocktail[] {
-      return this.favouriteCocktail;
-    }
-    isFavourite (cocktailId: string): boolean {
-      return this.cocktailFav.has(cocktailId);
-    }
-    toggleFavourite(cocktailId: string) {
-      if(this.cocktailFav.has(cocktailId)){
-        this.cocktailFav.delete(cocktailId);
-      } else{
-        this.cocktailFav.add(cocktailId);
-      }
-    }
+  constructor () {
+    this.loadFavouritesCocktails();
   }
+
+  private loadFavouritesCocktails(): void {
+    const favourites = localStorage.getItem(this.favouriteCocktailKey);
+    this.cocktailFav = favourites ? new Set(JSON.parse(favourites)): new Set();
+  }
+  private storeFavouriteCocktails(): void {
+    localStorage.setItem(this.favouriteCocktailKey,
+    JSON.stringify(Array.from(this.cocktailFav)));
+
+  }
+   getFavouriteCocktail(): Set<string> {
+    return this.cocktailFav;
+  }
+  isFavourite (cocktailId: string): boolean {
+    return this.cocktailFav.has(cocktailId);
+  }
+  toggleFavourite(cocktailId: string): void {
+    if(this.cocktailFav.has(cocktailId)){
+      this.cocktailFav.delete(cocktailId);
+    } else{
+      this.cocktailFav.add(cocktailId);
+    }
+    this.storeFavouriteCocktails();
+  }
+
+}
