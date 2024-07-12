@@ -5,4 +5,5 @@ export interface Cocktail {
   imageUrl:string;
   instructions:string;
   ingredients:string[];
+  isFavourite: boolean;
 }
